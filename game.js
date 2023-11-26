@@ -31,23 +31,29 @@ for (let i = 0; i < HouseImages.length; i++ ){
 for (let i = 0; i < ShapeImages.length; i++) {
 	loader.addResource(ShapeImages[i]);
 }
+for (let i = 0; i < Gradients.length; i++) {
+	loader.addResource(Gradients[i]);
+}
+for (let i = 0; i < Characters.length; i++) {
+	loader.addResource(Characters[i]);
+}
+for (let i = 0; i < UI.length; i++) {
+	loader.addResource(UI[i]);
+}
 for (var sound in Sounds) {
     loader.addResource(Sounds[sound])
 }
 
 engine.add('cutscene_one', buildCutsceneOne(engine))
+engine.add('cutscene_two', buildCutSceneTwo(engine))
 engine.add('objectGame', buildObjectGame(engine))
 engine.add('title', TitleScreen)
 
 
 engine.start(loader).then(() => {
-    engine.goToScene('title')
-    engine.input.pointers.on('down', function() {
-        engine.input.pointers.primary.off("down");
-        engine.goToScene('cutscene_one')
-    })
+    engine.goToScene('cutscene_one')
+    // engine.input.pointers.on('down', function() {
+    //     engine.input.pointers.primary.off("down");
+    //     engine.goToScene('objectGame')
+    // })
 })
-
-function getEngine() {
-    return engine
-}

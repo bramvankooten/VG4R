@@ -63,6 +63,27 @@ const ShapeImages = [
     new ex.ImageSource('./Icons/Shape/shape_ten.png'),
 ]
 
+const Gradients = [
+    new ex.ImageSource('./Icons/Visuals/gradient_one.png'),
+    new ex.ImageSource('./Icons/Visuals/gradient_two.png'),
+    new ex.ImageSource('./Icons/Visuals/gradient_three.png'),
+    new ex.ImageSource('./Icons/Visuals/gradient_four.png'),
+    new ex.ImageSource('./Icons/Visuals/gradient_five.png'),
+]
+
+const Characters = [
+    new ex.ImageSource('./Icons/Character/Character_one.svg'),
+    new ex.ImageSource('./Icons/Character/Character_two.svg'),
+    new ex.ImageSource('./Icons/Character/Character_three.svg'),
+    new ex.ImageSource('./Icons/Character/Character_four.svg'),
+]
+
+const UI = [
+    new ex.ImageSource('./Icons/UI/textbox_one.png'),
+    new ex.ImageSource('./Icons/UI/textbox_two.png'),
+    new ex.ImageSource('./Icons/UI/textbox_three.png')
+]
+
 const Sounds = {
     correct: new ex.Sound('./sounds/correct.mp3')
 }

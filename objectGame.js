@@ -28,7 +28,7 @@ var buildObjectGame = function(passEngine) {
     }
 
     let numCollected = 0
-    let maxCollect = 3
+    let maxCollect = 10
 
     function newRound() {
         icons = chooseIcons()
@@ -62,7 +62,7 @@ var buildObjectGame = function(passEngine) {
             text: 'Target:',
             pos: ex.vec(5, screenHeight - 25),
             font: new ex.Font({
-                family: 'impact',
+                family: 'Roboto',
                 size: objectSize,
             }),
         })
@@ -141,13 +141,25 @@ var buildObjectGame = function(passEngine) {
             Sounds.correct.play(0.25)
             numCollected += 1
             label.text = 'Find the objects: ' + (numCollected).toString() + '/' + maxCollect
+            switch(numCollected % 3) {
+                case 0:
+                    correctUI.graphics.show('one');
+                    break;
+                case 1:
+                    correctUI.graphics.show('two');
+                    break;
+                case 2:
+                    correctUI.graphics.show('three')
+                    break;
+            }
             target.actions.scaleBy(ex.vec(1.5,1.5), .75).callMethod(() => {                
                 target.kill()
                 targetGraphic.kill()
                 targetGraphicBackground.kill()
+                correctUI.graphics.hide()
                 if (numCollected === maxCollect) {
                     numCollected = 0
-                    passEngine.goToScene('title')
+                    passEngine.goToScene('cutscene_two')
                     label.text = 'Find the objects: ' + (numCollected).toString() + '/' + maxCollect
                     newRound()
                 } else {
@@ -164,12 +176,64 @@ var buildObjectGame = function(passEngine) {
         text: 'Find the objects: ' + (numCollected).toString() + '/' + maxCollect,
         pos: ex.vec(10,objectSize),
         font: new ex.Font({
-            family: 'impact',
+            family: 'Roboto',
             size: objectSize * 0.75,
         }),
     })
 
     ObjectGame.add(label)
+
+    const actor = new ex.Actor({
+        x: 0,
+        y: 0,
+        width: screenWidth,
+        height: screenHeight,
+        // color: ex.Color.Blue
+     });
+    actor.z = -99;
+    actor.graphics.anchor = ex.Vector.Zero;
+    var background = new ex.Sprite({
+        image: Gradients[3],
+        destSize: {
+            height: screenHeight,
+            width: screenWidth,
+        }
+    })
+    
+    actor.graphics.use(background)
+
+    ObjectGame.add(actor)
+
+    uiSprite_one = new ex.Sprite({
+        image: UI[0]
+    })
+    uiSprite_two = new ex.Sprite({
+        image: UI[1]
+    })
+    uiSprite_three = new ex.Sprite({
+        image: UI[2]
+    })
+
+    scaleFactor = screenWidth/1169 - 0.1
+    console.log(scaleFactor)
+    uiSprite_one.scale = ex.vec(scaleFactor, scaleFactor)
+    uiSprite_two.scale = ex.vec(scaleFactor, scaleFactor)
+    uiSprite_three.scale = ex.vec(scaleFactor, scaleFactor)
+
+    const correctUI = new ex.Actor({
+        x: screenWidth/2,
+        y: screenHeight/10,
+        height:200,
+        width:200,
+    })
+    correctUI.z = 99
+
+    correctUI.graphics.add('one', uiSprite_one)
+    correctUI.graphics.add('two', uiSprite_two)
+    correctUI.graphics.add('three', uiSprite_three)
+
+    ObjectGame.add(correctUI)
+
 
     newRound()
     return ObjectGame
